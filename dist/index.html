@@ -27,17 +27,41 @@
         </div>
     </div>
 
+    <div class="dark-overlay"></div>
+
+    <form class="create-task-popup">
+        <input type="text" id="task-text" required>
+        <input type="date" id="task-date">
+        <div class="submit-and-cancel-btns">
+            <button type="submit" class="green-btn btn">Submit</button>
+            <button class="red-btn btn">Cancel</button>
+        </div>
+    </form>
+
     <div class="main">
-        <button class="create-new-task btn">+ Create New</button>
-        <div class="tasks-container">
-            <div class="task">
-                <div class="task-complete-and-text">
-                    <button class="complete-task btn">Complete</button>
-                    <p class="task-text">Go to the gym</p>
+        <div class="container">
+            <h1 id="current-page-title">All</h1>
+            <button class="create-new-task btn">+ Create New</button>
+            <div class="tasks-container">
+                <div class="task">
+                    <div class="task-complete-and-text">
+                        <button class="green-btn btn">Complete</button>
+                        <p class="task-text">Go to the gym</p>
+                    </div>
+                    <div class="task-date-and-remove">
+                        <p class="task-date">DD/MM/YY</p>
+                        <button class="red-btn btn">Remove</button>
+                    </div>
                 </div>
-                <div class="task-date-and-remove">
-                    <p class="task-date">DD/MM/YY</p>
-                    <button class="remove-task btn">Remove</button>
+                <div class="task">
+                    <div class="task-complete-and-text">
+                        <button class="green-btn btn">Complete</button>
+                        <p class="task-text">Go to the gym</p>
+                    </div>
+                    <div class="task-date-and-remove">
+                        <p class="task-date">DD/MM/YY</p>
+                        <button class="red-btn btn">Remove</button>
+                    </div>
                 </div>
             </div>
         </div>

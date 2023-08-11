@@ -2,7 +2,7 @@
     --primaryColDark: #1e1e1e;
     --primaryColLight: white;
     --secondaryCol1: #9067C6;
-    --secondaryCol2: #CAC4CE;
+    --secondaryCol2: #dbdbdb;
     --highlightCol: rgb(255, 166, 0);
 }
 
@@ -80,10 +80,22 @@ body {
 
 .main {
     display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.container {
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
-    padding: 50px;
+    width: 80%;
+}
+
+#current-page-title {
+    font-weight: bold;
+    font-size: 3rem;
+    align-self: flex-start;
 }
 
 .create-new-task {
@@ -96,7 +108,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
+    gap: 10px;
+    width: 80%;
 }
 
 .task {
@@ -116,11 +129,52 @@ body {
     gap: 10px;
 }
 
-.complete-task {
+.dark-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.create-task-popup {
+    background-color: var(--secondaryCol2);
+    border-radius: 10px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 40%;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    z-index: 2;
+}
+
+.create-task-popup > * {
+    width: 100%;
+    flex: 1;
+}
+
+.submit-and-cancel-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.submit-and-cancel-btns > * {
+    flex: 1;
+}
+
+.green-btn {
     background-color: rgb(153, 255, 153);
 }
 
-.remove-task {
+.red-btn {
     background-color: rgb(255, 153, 153);
 }
 
