@@ -9,15 +9,42 @@
 </head>
 <body>
     <div class="header">
+        <h1 class="header-title">Todo</h1>
+    </div>
 
+    <div class="nav">
+        <div class="nav-home">
+            <h2 class="nav-title">Home</h2>
+            <button class="btn all">All</button>
+            <button class="btn today">Today</button>
+            <button class="btn week">Week</button>
+        </div>
+        <div class="nav-projects">
+            <h2 class="nav-title">Projects</h2>
+            <button class="btn project">Project1</button>
+            <button class="btn project">Project2</button>
+            <button class="btn project">Project3</button>
+        </div>
     </div>
 
     <div class="main">
-
+        <button class="create-new-task btn">+ Create New</button>
+        <div class="tasks-container">
+            <div class="task">
+                <div class="task-complete-and-text">
+                    <button class="complete-task btn">Complete</button>
+                    <p class="task-text">Go to the gym</p>
+                </div>
+                <div class="task-date-and-remove">
+                    <p class="task-date">DD/MM/YY</p>
+                    <button class="remove-task btn">Remove</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="footer">
-
+        <p>Copyright © 2023 Tyler Mommsen</p>
     </div>
 </body>
 </html>
