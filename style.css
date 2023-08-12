@@ -1,8 +1,8 @@
 :root {
     --primaryColDark: #1e1e1e;
     --primaryColLight: white;
-    --secondaryCol1: #9067C6;
-    --secondaryCol2: #dbdbdb;
+    --secondaryCol1: #5c5c5c;
+    --secondaryCol2: #e6e6e6;
     --highlightCol: rgb(255, 166, 0);
 }
 
@@ -27,6 +27,8 @@ body {
     grid-template-rows: 2fr 20fr 1fr;
 }
 
+/* header */
+
 .header {
     background-color: var(--primaryColDark);
     color: var(--primaryColLight);
@@ -40,6 +42,8 @@ body {
 .header-title {
     margin-left: 20px;
 }
+
+/* nav */
 
 .nav {
     background-color: var(--secondaryCol1);
@@ -55,16 +59,18 @@ body {
     font-size: 1.5rem;
     width: 50%;
     align-self: center;
-    background-color: var(--primaryColLight);
-    color: var(--primaryColDark);
+    background-color: transparent;
+    color: var(--primaryColLight);
 }
 
 .nav .btn:hover {
-    background-color: rgba(230, 230, 230);
+    font-weight: bold;
+    margin-left: 50px;
 }
 
 .nav .btn:focus {
-    background-color: rgba(210, 210, 210);
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 .nav-title {
@@ -78,10 +84,19 @@ body {
     gap: 20px;
 }
 
+.nav-separator {
+    align-self: center;
+    height: 2px;
+    width: 80%;
+    background-color: var(--primaryColLight);
+}
+
+/* main content body */
+
 .main {
     display: flex;
     justify-content: center;
-    padding: 50px;
+    padding: 20px 50px 20px 50px;
 }
 
 .container {
@@ -177,6 +192,8 @@ body {
 .red-btn {
     background-color: rgb(255, 153, 153);
 }
+
+/* footer */
 
 .footer {
     background-color: var(--primaryColDark);
