@@ -1,6 +1,6 @@
 import Task from "./tasks";
 
-export default class User {
+class User {
     constructor(tasks = [], projects = []) {
         this.tasks = tasks;
         this.projects = projects;
@@ -11,3 +11,7 @@ export default class User {
         this.tasks.push(newTask);
     }
 }
+
+let user = new User();
+
+export default user;

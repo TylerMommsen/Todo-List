@@ -1,27 +1,15 @@
 import User from "./user";
 
-function nav() {
-    const navBtns = document.querySelectorAll('.nav .btn');
-}
-
 function loadAllTasks(user) {
     let allUserTasks = user.tasks;
 
     allUserTasks.forEach(function(value) {
-        displayTask(value);
-        console.log(value);
+        createTaskUI(value);
     });
 }
 
-function loadTodayTasks() {
-
-}
-
-function loadWeekTasks() {
-
-}
-
 function main(user) {
+    // creating tasks 
     const darkOverlay = document.querySelector('.dark-overlay');
     const createTaskPopup = document.querySelector('.create-task-popup');
     const createNewTaskBtn = document.querySelector('.create-new-task');
@@ -44,7 +32,7 @@ function main(user) {
     });
 }
 
-function displayTask(taskObj) {
+function createTaskUI(taskObj) {
     const tasksContainer = document.querySelector('.tasks-container');
     const task = document.createElement('div');
     const leftSide = document.createElement('div');
@@ -80,8 +68,6 @@ function displayTask(taskObj) {
 }
 
 export default function loadPage() {
-    let user = new User();
-    
     main(user);
     loadAllTasks(user);
 }
