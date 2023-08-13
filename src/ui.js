@@ -63,6 +63,13 @@ createTaskPopup.addEventListener('submit', (e) => {
     darkOverlay.style.display = 'none';
 });
 
+const cancelTaskPopupBtn = document.querySelector('#cancelPopupBtn');
+cancelTaskPopupBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    createTaskPopup.style.display = 'none';
+    darkOverlay.style.display = 'none';
+});
+
 function createTaskUI(taskObj) {
     const tasksContainer = document.querySelector('.tasks-container');
     const task = document.createElement('div');
