@@ -115,10 +115,10 @@ const navHomeBtns = navHome.querySelectorAll('button');
 const navProjects = document.querySelector('.nav-projects');
 const navProjectBtns = navProjects.querySelectorAll('button');
 
-handleNavStyling(navHomeBtns);
-handleNavStyling(navProjectBtns);
+handleNavBtnStyling(navHomeBtns);
+handleNavBtnStyling(navProjectBtns);
 
-function handleNavStyling(buttons) {
+function handleNavBtnStyling(buttons) {
     buttons.forEach((button) => {
         button.addEventListener('mouseenter', () => {
             if (!button.textContent.startsWith('- ')) {
