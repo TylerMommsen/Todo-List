@@ -1,9 +1,9 @@
 :root {
-    --primaryColDark: #1e1e1e;
-    --primaryColLight: white;
-    --secondaryCol1: #5c5c5c;
-    --secondaryCol2: #e6e6e6;
-    --highlightCol: rgb(255, 166, 0);
+    --dark1: rgb(17, 17, 17);
+    --dark2: rgb(30, 30, 30);
+    --light1: white;
+    --mainCol: rgb(59, 66, 167);
+    /* --highlightCol: rgb(255, 166, 0); */
 }
 
 * {
@@ -30,8 +30,8 @@ body {
 /* header */
 
 .header {
-    background-color: var(--primaryColDark);
-    color: var(--primaryColLight);
+    background-color: var(--dark1);
+    color: var(--light1);
     font-weight: bold;
     grid-column: 1 / -1;
     display: flex;
@@ -46,12 +46,12 @@ body {
 /* nav */
 
 .nav {
-    background-color: var(--secondaryCol1);
+    background-color: rgb(59, 66, 167);
     display: flex;
     flex-direction: column;
     gap: 50px;
     padding: 20px;
-    color: var(--primaryColLight);
+    color: var(--light1);
 }
 
 .nav .btn {
@@ -60,7 +60,7 @@ body {
     width: 50%;
     align-self: center;
     background-color: transparent;
-    color: var(--primaryColLight);
+    color: var(--light1);
 }
 
 .nav .btn:hover {
@@ -88,12 +88,13 @@ body {
     align-self: center;
     height: 2px;
     width: 80%;
-    background-color: var(--primaryColLight);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* main content body */
 
 .main {
+    background-color: var(--dark2);
     display: flex;
     justify-content: center;
     padding: 20px 50px 20px 50px;
@@ -108,12 +109,15 @@ body {
 }
 
 #current-page-title {
+    color: white;
     font-weight: bold;
     font-size: 3rem;
     align-self: flex-start;
 }
 
 .create-new-task {
+    background-color: var(--mainCol);
+    color: white;
     padding: 20px 30px 20px 30px;
     font-size: 1.5rem;
     font-weight: bold;
@@ -154,7 +158,7 @@ body {
 }
 
 .create-task-popup {
-    background-color: var(--secondaryCol2);
+    background-color: var(--mainCol);
     border-radius: 10px;
     padding: 20px;
     position: fixed;
@@ -196,8 +200,8 @@ body {
 /* footer */
 
 .footer {
-    background-color: var(--primaryColDark);
-    color: var(--primaryColLight);
+    background-color: rgb(17, 17, 17);
+    color: var(--light1);
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
