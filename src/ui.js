@@ -1,36 +1,67 @@
 import User from "./user";
 
-function loadAllTasks(user) {
-    let allUserTasks = user.tasks;
+const user = new User();
+let currentPage = 'all';
 
-    allUserTasks.forEach(function(value) {
-        createTaskUI(value);
+function loadAll() {
+    const tasksContainer = document.querySelector('.tasks-container');
+    tasksContainer.innerHTML = '';
+    user.tasks.forEach(function (task) {
+        createTaskUI(task);
     });
 }
 
-function main(user) {
-    // creating tasks 
-    const darkOverlay = document.querySelector('.dark-overlay');
-    const createTaskPopup = document.querySelector('.create-task-popup');
+function loadToday() {
+
+}
+
+function loadWeek() {
+
+}
+
+function loadCurrentPage() {
+    switch (currentPage) {
+        case 'all':
+            loadAll();
+            break;
+        case 'today':
+            loadToday();
+            break;
+        case 'week':
+            loadWeek();
+            break;
+        default:
+            loadAll();
+            break;
+    }
+}
+
+function main() {
     const createNewTaskBtn = document.querySelector('.create-new-task');
-    const taskText = document.querySelector('#task-text');
-    const taskDate = document.querySelector('#task-date');
-
-    createNewTaskBtn.addEventListener('click', () => {
-        createTaskPopup.style.display = 'flex';
-        darkOverlay.style.display = 'block';
-
-        createTaskPopup.addEventListener('submit', (e) => {
-            e.preventDefault();
-            let text = taskText.value;
-            let date = taskDate.value;
-            user.createNewTask(text, date);
-            loadAllTasks(user);
-            createTaskPopup.style.display = 'none';
-            darkOverlay.style.display = 'none';
-        });
-    });
+    createNewTaskBtn.addEventListener('click', createNewTask);
 }
+
+function createNewTask() {
+    createTaskPopup.style.display = 'flex';
+    darkOverlay.style.display = 'block';
+    taskDate.value = '';
+    taskText.value = '';
+}
+
+const darkOverlay = document.querySelector('.dark-overlay');
+const taskText = document.querySelector('#task-text');
+const taskDate = document.querySelector('#task-date');
+const createTaskPopup = document.querySelector('.create-task-popup');
+createTaskPopup.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let text = taskText.value;
+    let date = taskDate.value;
+    user.createNewTask(text, date);
+    loadCurrentPage();
+
+    createTaskPopup.style.display = 'none';
+    darkOverlay.style.display = 'none';
+});
 
 function createTaskUI(taskObj) {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -57,6 +88,18 @@ function createTaskUI(taskObj) {
     completeBtn.textContent = "Complete"
     removeBtn.textContent = "Remove"
 
+    completeBtn.addEventListener('click', () => {
+        user.removeTask(taskText);
+        task.remove();
+        loadCurrentPage();
+    })
+
+    removeBtn.addEventListener('click', () => {
+        user.removeTask(taskText);
+        task.remove();
+        loadCurrentPage();
+    })
+
     leftSide.appendChild(completeBtn);
     leftSide.appendChild(taskText);
     rightSide.appendChild(taskDate);
@@ -68,6 +111,6 @@ function createTaskUI(taskObj) {
 }
 
 export default function loadPage() {
-    main(user);
-    loadAllTasks(user);
+    loadCurrentPage();
+    main();
 }
