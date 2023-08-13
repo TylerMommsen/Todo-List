@@ -110,6 +110,43 @@ function createTaskUI(taskObj) {
     tasksContainer.appendChild(task);
 }
 
+const navHome = document.querySelector('.nav-home');
+const navHomeBtns = navHome.querySelectorAll('button');
+const navProjects = document.querySelector('.nav-projects');
+const navProjectBtns = navProjects.querySelectorAll('button');
+
+handleNavStyling(navHomeBtns);
+handleNavStyling(navProjectBtns);
+
+function handleNavStyling(buttons) {
+    buttons.forEach((button) => {
+        button.addEventListener('mouseenter', () => {
+            if (!button.textContent.startsWith('- ')) {
+                button.textContent = '- ' + button.textContent;
+            }
+        });
+    
+        button.addEventListener('mouseleave', () => {
+            if (button.getAttribute('nav-btn-clicked') !== 'true') {
+                button.textContent = button.textContent.slice(2);
+            }
+        });
+    
+        button.addEventListener('click', () => {
+            buttons.forEach(otherButtons => {
+                if (otherButtons !== button) {
+                    if (otherButtons.textContent.startsWith('- ')) {
+                        otherButtons.textContent = otherButtons.textContent.slice(2);
+                    }
+                    otherButtons.removeAttribute('nav-btn-clicked');
+                }
+            });
+    
+            button.setAttribute('nav-btn-clicked', 'true');
+        });
+    });
+}
+
 export default function loadPage() {
     loadCurrentPage();
     main();

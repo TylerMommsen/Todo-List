@@ -68,9 +68,9 @@ body {
     margin-left: 50px;
 }
 
-.nav .btn:focus {
+[nav-btn-clicked="true"] {
     font-weight: bold;
-    margin-left: 20px;
+    margin-left: 50px;
 }
 
 .nav-title {
