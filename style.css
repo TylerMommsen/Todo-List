@@ -3,7 +3,8 @@
     --dark2: rgb(30, 30, 30);
     --light1: white;
     --mainCol: rgb(59, 66, 167);
-    /* --highlightCol: rgb(255, 166, 0); */
+    --highlightCol: rgb(106, 59, 167);
+    --highlightColLight: rgb(123, 72, 190);
 }
 
 * {
@@ -46,7 +47,7 @@ body {
 /* nav */
 
 .nav {
-    background-color: rgb(59, 66, 167);
+    background-color: var(--mainCol);
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -104,7 +105,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
     width: 80%;
 }
 
@@ -113,14 +114,6 @@ body {
     font-weight: bold;
     font-size: 3rem;
     align-self: flex-start;
-}
-
-.create-new-task {
-    background-color: var(--mainCol);
-    color: white;
-    padding: 20px 30px 20px 30px;
-    font-size: 1.5rem;
-    font-weight: bold;
 }
 
 .tasks-container {
@@ -132,7 +125,9 @@ body {
 }
 
 .task {
-    border: 2px solid var(--highlightCol);
+    background-color: rgba(106, 59, 167, 0.6);
+    border: 2px solid var(--highlightColLight);
+    color: var(--light1);
     padding: 10px;
     border-radius: 10px;
     display: flex;
@@ -155,6 +150,18 @@ body {
     width: 100%;
     height: 100%;
     z-index: 1;
+}
+
+.create-new-task {
+    background-color: var(--mainCol);
+    color: var(--light1);
+    padding: 20px 30px 20px 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.create-new-task:hover {
+    background-color: rgb(49, 55, 139);
 }
 
 .create-task-popup {
@@ -193,8 +200,16 @@ body {
     background-color: rgb(153, 255, 153);
 }
 
+.green-btn:hover {
+    background-color: rgb(117, 196, 117);
+}
+
 .red-btn {
     background-color: rgb(255, 153, 153);
+}
+
+.red-btn:hover {
+    background-color: rgb(199, 119, 119);
 }
 
 /* footer */
