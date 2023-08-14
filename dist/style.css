@@ -3,8 +3,8 @@
     --dark2: rgb(30, 30, 30);
     --light1: white;
     --mainCol: rgb(59, 66, 167);
-    --highlightCol: rgb(106, 59, 167);
-    --highlightColLight: rgb(123, 72, 190);
+    --highlightCol: #e7890f;
+    --highlightColLight: #d37d0d;
 }
 
 * {
@@ -42,6 +42,10 @@ body {
 
 .header-title {
     margin-left: 20px;
+}
+
+.header-styling {
+    border-bottom: 4px solid var(--highlightColLight);
 }
 
 /* nav */
@@ -94,13 +98,13 @@ body {
 }
 
 .nav .create-new-project {
-    background-color: var(--highlightColLight);
+    background-color: var(--highlightCol);
     width: 80%;
     font-weight: bold;
 }
 
 .create-new-project:hover {
-    background-color: var(--highlightCol);
+    background-color: var(--highlightColLight);
 }
  
 /* main content body */
@@ -164,7 +168,7 @@ body {
 }
 
 .create-new-task {
-    background-color: var(--mainCol);
+    background-color: var(--highlightCol);
     color: var(--light1);
     padding: 20px 30px 20px 30px;
     font-size: 1.5rem;
@@ -172,7 +176,7 @@ body {
 }
 
 .create-new-task:hover {
-    background-color: rgb(49, 55, 139);
+    background-color: var(--highlightColLight);
 }
 
 .create-task-popup,

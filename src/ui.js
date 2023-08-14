@@ -4,29 +4,23 @@ const user = new User();
 let currentPage = 'all';
 let pages = ['all', 'today', 'week'];
 
-function loadAll() {
+function loadCurrentPage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = '';
-    user.tasks.forEach(function (task) {
-        createTaskUI(task);
-    });
+
+    addTaskToProj();
 }
 
-function loadCurrentPage() {
-    switch (currentPage) {
-        case 'all':
-            loadAll();
-            break;
-        case 'today':
-            loadToday();
-            break;
-        case 'week':
-            loadWeek();
-            break;
-        default:
-            loadAll();
-            break;
-    }
+function addTaskToProj() {
+    user.projects.forEach(project => {
+        if (project.name === currentPage) {
+            let projectTasks = project.tasks;
+
+            projectTasks.forEach(task => {
+                createTaskUI(task);
+            })
+        }
+    });
 }
 
 function updateNavProjects() {
@@ -37,7 +31,7 @@ function updateNavProjects() {
     for (let i = 3; i < pages.length; i++) {
         createProjectUI(pages[i]);
     }
-    
+
     navProjectBtns = navProjects.querySelectorAll('button');
     handleNavBtnStyling(navProjectBtns);
 }
@@ -84,7 +78,12 @@ createTaskPopup.addEventListener('submit', (e) => {
     e.preventDefault();
     let text = taskText.value;
     let date = taskDate.value;
-    user.createNewTask(text, date);
+    let task = user.createNewTask(text, date);
+    user.projects.forEach(project => {
+        if (project.name === currentPage) {
+            project.addTask(task);
+        }
+    })
     loadCurrentPage();
 
     createTaskPopup.style.display = 'none';
@@ -98,6 +97,7 @@ createProjectPopup.addEventListener('submit', (e) => {
     pages.push(name);
     updateNavProjects();
     currentPage = name;
+    loadCurrentPage();
 
     createProjectPopup.style.display = 'none';
     darkOverlay.style.display = 'none';
@@ -143,13 +143,14 @@ function createTaskUI(taskObj) {
     removeBtn.textContent = "Remove"
 
     completeBtn.addEventListener('click', () => {
-        user.removeTask(taskText);
+        user.removeTask(taskText, currentPage);
         task.remove();
+
         loadCurrentPage();
     })
 
     removeBtn.addEventListener('click', () => {
-        user.removeTask(taskText);
+        user.removeTask(taskText, currentPage);
         task.remove();
         loadCurrentPage();
     })
@@ -171,61 +172,6 @@ let navProjectBtns = navProjects.querySelectorAll('button');
 
 handleNavBtnStyling(navHomeBtns);
 handleNavBtnStyling(navProjectBtns);
-
-// function handleNavBtnStyling(buttons) {
-//     buttons.forEach((button) => {
-//         button.removeEventListener('mouseenter', () => {
-//             if (!button.textContent.startsWith('- ')) {
-//                 button.textContent = '- ' + button.textContent;
-//             }
-//         });
-//         button.removeEventListener('mouseleave', () => {
-//             if (button.getAttribute('nav-btn-clicked') !== 'true') {
-//                 button.textContent = button.textContent.slice(2);
-//             }
-//         });
-    
-//         button.removeEventListener('click', () => {
-//             buttons.forEach(otherButtons => {
-//                 if (otherButtons !== button) {
-//                     if (otherButtons.textContent.startsWith('- ')) {
-//                         otherButtons.textContent = otherButtons.textContent.slice(2);
-//                     }
-//                     otherButtons.removeAttribute('nav-btn-clicked');
-//                 }
-//             });
-    
-//             button.setAttribute('nav-btn-clicked', 'true');
-//         });
-//     })
-
-//     buttons.forEach((button) => {
-//         button.addEventListener('mouseenter', () => {
-//             if (!button.textContent.startsWith('- ')) {
-//                 button.textContent = '- ' + button.textContent;
-//             }
-//         });
-    
-//         button.addEventListener('mouseleave', () => {
-//             if (button.getAttribute('nav-btn-clicked') !== 'true') {
-//                 button.textContent = button.textContent.slice(2);
-//             }
-//         });
-    
-//         button.addEventListener('click', () => {
-//             buttons.forEach(otherButtons => {
-//                 if (otherButtons !== button) {
-//                     if (otherButtons.textContent.startsWith('- ')) {
-//                         otherButtons.textContent = otherButtons.textContent.slice(2);
-//                     }
-//                     otherButtons.removeAttribute('nav-btn-clicked');
-//                 }
-//             });
-    
-//             button.setAttribute('nav-btn-clicked', 'true');
-//         });
-//     });
-// }
 
 function handleNavBtnStyling(buttons) {
     function mouseEnterHandler() {
@@ -250,7 +196,9 @@ function handleNavBtnStyling(buttons) {
             }
         });
     
+        currentPage = this.textContent.slice(2).toLowerCase();
         this.setAttribute('nav-btn-clicked', 'true');
+        loadCurrentPage();
     }
 
     buttons.forEach(button => {

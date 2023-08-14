@@ -1,5 +1,5 @@
 export default class Task {
-    constructor(text, date, project = 'all') {
+    constructor(text, date, project) {
         this.text = text;
         this.date = date;
         this.project = project;
