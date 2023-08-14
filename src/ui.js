@@ -176,18 +176,6 @@ handleNavBtnStyling(navHomeBtns);
 handleNavBtnStyling(navProjectBtns);
 
 function handleNavBtnStyling(buttons) {
-    function mouseEnterHandler() {
-        if (!this.textContent.startsWith('- ')) {
-            this.textContent = '- ' + this.textContent;
-        }
-    }
-    
-    function mouseLeaveHandler() {
-        if (this.getAttribute('nav-btn-clicked') !== 'true') {
-            this.textContent = this.textContent.slice(2);
-        }
-    }
-    
     function clickHandler() {
         buttons.forEach(otherButton => {
             if (otherButton !== this) {
@@ -198,18 +186,13 @@ function handleNavBtnStyling(buttons) {
             }
         });
     
-        currentPage = this.textContent.slice(2).toLowerCase();
+        currentPage = this.textContent.toLowerCase();
         this.setAttribute('nav-btn-clicked', 'true');
         loadCurrentPage();
     }
 
     buttons.forEach(button => {
-        button.removeEventListener('mouseenter', mouseEnterHandler);
-        button.removeEventListener('mouseleave', mouseLeaveHandler);
         button.removeEventListener('click', clickHandler);
-
-        button.addEventListener('mouseenter', mouseEnterHandler);
-        button.addEventListener('mouseleave', mouseLeaveHandler);
         button.addEventListener('click', clickHandler);
     });
 }

@@ -62,21 +62,20 @@ body {
 .nav .btn {
     padding: 10px;
     font-size: 1.5rem;
-    width: 50%;
+    width: 80%;
     align-self: center;
     background-color: transparent;
     color: var(--light1);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .nav .nav-home .btn:hover,
 .nav .nav-projects .btn:hover {
     font-weight: bold;
-    margin-left: 50px;
 }
 
 [nav-btn-clicked="true"] {
     font-weight: bold;
-    margin-left: 50px;
 }
 
 .nav-title {
