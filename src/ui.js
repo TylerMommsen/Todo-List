@@ -8,10 +8,12 @@ function loadCurrentPage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = '';
 
-    addTaskToProj();
+    const currentPageTitle = document.querySelector('#current-page-title');
+    currentPageTitle.textContent = currentPage.charAt(0).toUpperCase() + currentPage.slice(1);
+    getTasksFromProj();
 }
 
-function addTaskToProj() {
+function getTasksFromProj() {
     user.projects.forEach(project => {
         if (project.name === currentPage) {
             let projectTasks = project.tasks;
