@@ -1,4 +1,5 @@
 import Task from "./task";
+import Project from "./project";
 
 export default class User {
     constructor(tasks = [], projects = []) {
@@ -17,5 +18,9 @@ export default class User {
                 this.tasks.splice(i, 1);
             }
         })
+    }
+
+    createNewProject(name) {
+        this.projects.push(new Project(name))
     }
 }

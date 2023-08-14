@@ -39,7 +39,18 @@ function loadCurrentPage() {
 function main() {
     const createNewTaskBtn = document.querySelector('.create-new-task');
     createNewTaskBtn.addEventListener('click', createNewTask);
+
+    const createNewProjectBtn = document.querySelector('.create-new-project');
+    createNewProjectBtn.addEventListener('click', createNewProject);
 }
+
+const darkOverlay = document.querySelector('.dark-overlay');
+const taskText = document.querySelector('#task-text');
+const taskDate = document.querySelector('#task-date');
+const createTaskPopup = document.querySelector('.create-task-popup');
+
+const projName = document.querySelector('#project-name');
+const createProjectPopup = document.querySelector('.create-project-popup');
 
 function createNewTask() {
     createTaskPopup.style.display = 'flex';
@@ -48,10 +59,13 @@ function createNewTask() {
     taskText.value = '';
 }
 
-const darkOverlay = document.querySelector('.dark-overlay');
-const taskText = document.querySelector('#task-text');
-const taskDate = document.querySelector('#task-date');
-const createTaskPopup = document.querySelector('.create-task-popup');
+function createNewProject() {
+    console.log('called');
+    createProjectPopup.style.display = 'flex';
+    darkOverlay.style.display = 'block';
+    projName.value = '';
+}
+
 createTaskPopup.addEventListener('submit', (e) => {
     e.preventDefault();
     let text = taskText.value;
@@ -63,7 +77,24 @@ createTaskPopup.addEventListener('submit', (e) => {
     darkOverlay.style.display = 'none';
 });
 
-const cancelTaskPopupBtn = document.querySelector('#cancelPopupBtn');
+createProjectPopup.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let name = projName.value;
+    user.createNewProject(name);
+    loadCurrentPage();
+
+    createProjectPopup.style.display = 'none';
+    darkOverlay.style.display = 'none';
+});
+
+const cancelProjectPopupBtn = document.querySelector('#cancelProjPopupBtn');
+cancelProjectPopupBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    createProjectPopup.style.display = 'none';
+    darkOverlay.style.display = 'none';
+});
+
+const cancelTaskPopupBtn = document.querySelector('#cancelTaskPopupBtn');
 cancelTaskPopupBtn.addEventListener('click', (e) => {
     e.preventDefault();
     createTaskPopup.style.display = 'none';
