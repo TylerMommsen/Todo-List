@@ -26,7 +26,16 @@
             <button class="btn project">Project2</button>
             <button class="btn project">Project3</button>
         </div>
+        <button class="create-new-project btn">New Project</button>
     </div>
+
+    <form class="create-project-popup">
+        <input type="text" id="project-name" placeholder="Name" required>
+        <div class="submit-and-cancel-btns">
+            <button type="submit" class="green-btn btn">Submit</button>
+            <button class="red-btn btn" id="cancelProjPopupBtn">Cancel</button>
+        </div>
+    </form>
 
     <div class="dark-overlay"></div>
 
@@ -35,7 +44,7 @@
         <input type="date" id="task-date">
         <div class="submit-and-cancel-btns">
             <button type="submit" class="green-btn btn">Submit</button>
-            <button class="red-btn btn" id="cancelPopupBtn">Cancel</button>
+            <button class="red-btn btn" id="cancelTaskPopupBtn">Cancel</button>
         </div>
     </form>
 
