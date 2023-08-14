@@ -2,6 +2,7 @@ import User from "./user";
 
 const user = new User();
 let currentPage = 'all';
+let pages = ['all', 'today', 'week'];
 
 function loadAll() {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -9,14 +10,6 @@ function loadAll() {
     user.tasks.forEach(function (task) {
         createTaskUI(task);
     });
-}
-
-function loadToday() {
-
-}
-
-function loadWeek() {
-
 }
 
 function loadCurrentPage() {
@@ -34,6 +27,28 @@ function loadCurrentPage() {
             loadAll();
             break;
     }
+}
+
+function updateNavProjects() {
+    navProjectBtns.forEach((button) => {
+        button.remove();
+    })
+
+    for (let i = 3; i < pages.length; i++) {
+        createProjectUI(pages[i]);
+    }
+    
+    navProjectBtns = navProjects.querySelectorAll('button');
+    handleNavBtnStyling(navProjectBtns);
+}
+
+function createProjectUI(text) {
+    const projectBtn = document.createElement('button');
+    projectBtn.classList.add('btn');
+    projectBtn.classList.add('project');
+    projectBtn.textContent = text;
+
+    navProjects.appendChild(projectBtn);
 }
 
 function main() {
@@ -60,7 +75,6 @@ function createNewTask() {
 }
 
 function createNewProject() {
-    console.log('called');
     createProjectPopup.style.display = 'flex';
     darkOverlay.style.display = 'block';
     projName.value = '';
@@ -81,7 +95,9 @@ createProjectPopup.addEventListener('submit', (e) => {
     e.preventDefault();
     let name = projName.value;
     user.createNewProject(name);
-    loadCurrentPage();
+    pages.push(name);
+    updateNavProjects();
+    currentPage = name;
 
     createProjectPopup.style.display = 'none';
     darkOverlay.style.display = 'none';
@@ -151,37 +167,100 @@ function createTaskUI(taskObj) {
 const navHome = document.querySelector('.nav-home');
 const navHomeBtns = navHome.querySelectorAll('button');
 const navProjects = document.querySelector('.nav-projects');
-const navProjectBtns = navProjects.querySelectorAll('button');
+let navProjectBtns = navProjects.querySelectorAll('button');
 
 handleNavBtnStyling(navHomeBtns);
 handleNavBtnStyling(navProjectBtns);
 
+// function handleNavBtnStyling(buttons) {
+//     buttons.forEach((button) => {
+//         button.removeEventListener('mouseenter', () => {
+//             if (!button.textContent.startsWith('- ')) {
+//                 button.textContent = '- ' + button.textContent;
+//             }
+//         });
+//         button.removeEventListener('mouseleave', () => {
+//             if (button.getAttribute('nav-btn-clicked') !== 'true') {
+//                 button.textContent = button.textContent.slice(2);
+//             }
+//         });
+    
+//         button.removeEventListener('click', () => {
+//             buttons.forEach(otherButtons => {
+//                 if (otherButtons !== button) {
+//                     if (otherButtons.textContent.startsWith('- ')) {
+//                         otherButtons.textContent = otherButtons.textContent.slice(2);
+//                     }
+//                     otherButtons.removeAttribute('nav-btn-clicked');
+//                 }
+//             });
+    
+//             button.setAttribute('nav-btn-clicked', 'true');
+//         });
+//     })
+
+//     buttons.forEach((button) => {
+//         button.addEventListener('mouseenter', () => {
+//             if (!button.textContent.startsWith('- ')) {
+//                 button.textContent = '- ' + button.textContent;
+//             }
+//         });
+    
+//         button.addEventListener('mouseleave', () => {
+//             if (button.getAttribute('nav-btn-clicked') !== 'true') {
+//                 button.textContent = button.textContent.slice(2);
+//             }
+//         });
+    
+//         button.addEventListener('click', () => {
+//             buttons.forEach(otherButtons => {
+//                 if (otherButtons !== button) {
+//                     if (otherButtons.textContent.startsWith('- ')) {
+//                         otherButtons.textContent = otherButtons.textContent.slice(2);
+//                     }
+//                     otherButtons.removeAttribute('nav-btn-clicked');
+//                 }
+//             });
+    
+//             button.setAttribute('nav-btn-clicked', 'true');
+//         });
+//     });
+// }
+
 function handleNavBtnStyling(buttons) {
-    buttons.forEach((button) => {
-        button.addEventListener('mouseenter', () => {
-            if (!button.textContent.startsWith('- ')) {
-                button.textContent = '- ' + button.textContent;
-            }
-        });
+    function mouseEnterHandler() {
+        if (!this.textContent.startsWith('- ')) {
+            this.textContent = '- ' + this.textContent;
+        }
+    }
     
-        button.addEventListener('mouseleave', () => {
-            if (button.getAttribute('nav-btn-clicked') !== 'true') {
-                button.textContent = button.textContent.slice(2);
-            }
-        });
+    function mouseLeaveHandler() {
+        if (this.getAttribute('nav-btn-clicked') !== 'true') {
+            this.textContent = this.textContent.slice(2);
+        }
+    }
     
-        button.addEventListener('click', () => {
-            buttons.forEach(otherButtons => {
-                if (otherButtons !== button) {
-                    if (otherButtons.textContent.startsWith('- ')) {
-                        otherButtons.textContent = otherButtons.textContent.slice(2);
-                    }
-                    otherButtons.removeAttribute('nav-btn-clicked');
+    function clickHandler() {
+        buttons.forEach(otherButton => {
+            if (otherButton !== this) {
+                if (otherButton.textContent.startsWith('- ')) {
+                    otherButton.textContent = otherButton.textContent.slice(2);
                 }
-            });
-    
-            button.setAttribute('nav-btn-clicked', 'true');
+                otherButton.removeAttribute('nav-btn-clicked');
+            }
         });
+    
+        this.setAttribute('nav-btn-clicked', 'true');
+    }
+
+    buttons.forEach(button => {
+        button.removeEventListener('mouseenter', mouseEnterHandler);
+        button.removeEventListener('mouseleave', mouseLeaveHandler);
+        button.removeEventListener('click', clickHandler);
+
+        button.addEventListener('mouseenter', mouseEnterHandler);
+        button.addEventListener('mouseleave', mouseLeaveHandler);
+        button.addEventListener('click', clickHandler);
     });
 }
 
