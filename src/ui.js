@@ -80,6 +80,9 @@ createTaskPopup.addEventListener('submit', (e) => {
     e.preventDefault();
     let text = taskText.value;
     let date = taskDate.value;
+    if (taskDate.value === '') {
+        date = 'YYYY/MM/DD';
+    }
     let task = user.createNewTask(text, date);
     user.projects.forEach(project => {
         if (project.name === currentPage) {
@@ -119,6 +122,22 @@ cancelTaskPopupBtn.addEventListener('click', (e) => {
     darkOverlay.style.display = 'none';
 });
 
+function editTask(button, taskObj) {
+    button.contentEditable = true;
+    button.focus();
+
+    button.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            button.contentEditable = false;
+        }
+    });
+
+    button.addEventListener("blur", function () {
+        button.contentEditable = false;
+    });
+}
+
 function createTaskUI(taskObj) {
     const tasksContainer = document.querySelector('.tasks-container');
     const task = document.createElement('div');
@@ -126,8 +145,8 @@ function createTaskUI(taskObj) {
     const rightSide = document.createElement('div');
     const completeBtn = document.createElement('button');
     const removeBtn = document.createElement('button');
-    const taskText = document.createElement('p');
-    const taskDate = document.createElement('p');
+    const taskText = document.createElement('div');
+    const taskDate = document.createElement('div');
 
     task.classList.add('task');
     leftSide.classList.add('task-complete-and-text');
@@ -138,24 +157,33 @@ function createTaskUI(taskObj) {
     removeBtn.classList.add('btn');
     taskText.classList.add('task-text');
     taskDate.classList.add('task-date');
+    taskText.classList.add('btn');
+    taskDate.classList.add('btn');
 
     taskText.textContent = taskObj.text;
     taskDate.textContent = taskObj.date;
     completeBtn.textContent = "Complete"
     removeBtn.textContent = "Remove"
 
+    taskText.addEventListener('click', () => {
+        editTask(taskText, taskObj);
+    });
+    taskDate.addEventListener('click', () => {
+        editTask(taskDate, taskObj);
+    });
+
     completeBtn.addEventListener('click', () => {
         user.removeTask(taskText, currentPage);
         task.remove();
 
         loadCurrentPage();
-    })
+    });
 
     removeBtn.addEventListener('click', () => {
         user.removeTask(taskText, currentPage);
         task.remove();
         loadCurrentPage();
-    })
+    });
 
     leftSide.appendChild(completeBtn);
     leftSide.appendChild(taskText);
