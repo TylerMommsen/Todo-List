@@ -26,16 +26,22 @@ function getTasksFromProj() {
 }
 
 function updateNavProjects() {
-    navProjectBtns.forEach((button) => {
-        button.remove();
-    })
+    allNavButtons.forEach((button, i) => {
+        if (button.classList.contains('project')) {
+            button.remove();
+            allNavButtons.splice(i, 1);
+        }
+    });
 
     for (let i = 3; i < pages.length; i++) {
         createProjectUI(pages[i]);
     }
 
     navProjectBtns = navProjects.querySelectorAll('button');
-    handleNavBtnStyling(navProjectBtns);
+    navProjectBtns.forEach(button => {
+        allNavButtons.push(button);
+    })
+    handleNavBtnStyling(allNavButtons);
 }
 
 function createProjectUI(text) {
@@ -130,12 +136,22 @@ function editTask(button, taskObj) {
         if (event.key === "Enter") {
             event.preventDefault();
             button.contentEditable = false;
+            saveToObject();
         }
     });
 
     button.addEventListener("blur", function () {
         button.contentEditable = false;
+        saveToObject();
     });
+
+    function saveToObject() {
+        if (button.classList.contains('task-text')) {
+            taskObj.text = button.textContent;
+        } else if (button.classList.contains('task-date')) {
+            taskObj.date = button.textContent;
+        }
+    }
 }
 
 function createTaskUI(taskObj) {
@@ -200,8 +216,17 @@ const navHomeBtns = navHome.querySelectorAll('button');
 const navProjects = document.querySelector('.nav-projects');
 let navProjectBtns = navProjects.querySelectorAll('button');
 
-handleNavBtnStyling(navHomeBtns);
-handleNavBtnStyling(navProjectBtns);
+let allNavButtons = [];
+function addToNavButtons(arr) {
+    arr.forEach(button => {
+        allNavButtons.push(button);
+    })
+}
+
+addToNavButtons(navHomeBtns);
+addToNavButtons(navProjectBtns);
+
+handleNavBtnStyling(allNavButtons);
 
 function handleNavBtnStyling(buttons) {
     function clickHandler() {
