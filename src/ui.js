@@ -14,8 +14,15 @@ function loadCurrentPage() {
 }
 
 function getTasksFromProj() {
+    const createNewTaskBtn = document.querySelector('.create-new-task');
     user.projects.forEach(project => {
         if (project.name === currentPage) {
+            if (project.name === 'today' || project.name === 'week') {
+                createNewTaskBtn.style.display = 'none';
+                loadHomePageProj(user.projects[0], currentPage); // the 'All' project
+                return;
+            }
+            createNewTaskBtn.style.display = 'inline-block';
             let projectTasks = project.tasks;
 
             projectTasks.forEach(task => {
@@ -23,6 +30,38 @@ function getTasksFromProj() {
             })
         }
     });
+}
+
+function loadHomePageProj(allProj, currentPage) {
+    if (currentPage === 'today') {
+        let projectTasks = allProj.tasks;
+        let now = new Date();
+        now.setHours(0, 0, 0, 0);
+        let today = new Date(now.getTime() + (24 * 60 * 60 * 1000));
+        today.setHours(0, 0, 0, 0);
+
+        projectTasks.forEach(task => {
+            let taskDate = new Date(task.date);
+            taskDate.setHours(23, 59, 0, 0);
+
+            if (taskDate >= now && taskDate <= today) {
+                createTaskUI(task);
+            }
+        });
+    } else if (currentPage === 'week') {
+        let projectTasks = allProj.tasks;
+        let now = new Date();
+        now.setHours(0, 0, 0, 0);
+        let weekLater = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+        projectTasks.forEach(task => {
+            let taskDate = new Date(task.date);
+            taskDate.setHours(0, 0, 0, 0);
+            if (taskDate >= now && taskDate <= weekLater) {
+                createTaskUI(task);
+            }
+        });
+    }
 }
 
 function updateNavProjects() {
@@ -137,12 +176,14 @@ function editTask(button, taskObj) {
             event.preventDefault();
             button.contentEditable = false;
             saveToObject();
+            loadCurrentPage();
         }
     });
 
     button.addEventListener("blur", function () {
         button.contentEditable = false;
         saveToObject();
+        loadCurrentPage();
     });
 
     function saveToObject() {
