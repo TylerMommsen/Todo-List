@@ -16,7 +16,7 @@
 .btn {
     border: none;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
 }
 
 body {
@@ -139,22 +139,54 @@ body {
 }
 
 .task {
-    background-color: rgba(106, 59, 167, 0.6);
-    border: 2px solid var(--highlightColLight);
+    background-color: var(--mainCol);
     color: var(--light1);
     padding: 10px;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     align-items: center;
-    font-size: 1.3rem;
-    width: 100%
+    width: 100%;
 }
 
 .task > * {
     display: flex;
-    align-items: center;
     gap: 10px;
+}
+
+.task button {
+    font-size: 1.3rem;
+}
+
+.task-complete-and-text {
+    flex: 1;
+}
+
+.task-text {
+    background-color: var(--light1);
+    color: var(--dark1);
+    flex: 1;
+    text-align: left;
+    align-self: center;
+    font-size: 1.3rem;
+}
+
+.task-date {
+    background-color: var(--light1);
+    color: var(--dark1);
+    align-self: center;
+    font-size: 1.3rem;
+}
+
+.task-text:hover,
+.task-date:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+.task-text:focus,
+.task-date:focus {
+    background-color: rgb(220, 220, 220);
 }
 
 .dark-overlay {
@@ -214,6 +246,7 @@ body {
 
 .green-btn {
     background-color: rgb(153, 255, 153);
+    font-weight: bold;
 }
 
 .green-btn:hover {
@@ -222,6 +255,7 @@ body {
 
 .red-btn {
     background-color: rgb(255, 153, 153);
+    font-weight: bold;
 }
 
 .red-btn:hover {
