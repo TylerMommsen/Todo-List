@@ -1,8 +1,54 @@
 import User from "./user";
+import Storage from "./storage";
 
-const user = new User();
+const storage = new Storage();
 let currentPage = 'all';
 let pages = ['all', 'today', 'week'];
+
+const navHome = document.querySelector('.nav-home');
+const navHomeBtns = navHome.querySelectorAll('button');
+const navProjects = document.querySelector('.nav-projects');
+let navProjectBtns = navProjects.querySelectorAll('button');
+
+let allNavButtons = [];
+function addToNavButtons(arr) {
+    arr.forEach(button => {
+        allNavButtons.push(button);
+    })
+}
+
+addToNavButtons(navHomeBtns);
+
+handleNavBtnStyling(allNavButtons);
+
+const user = new User();
+const savedUser = storage.getUser();
+if (savedUser) {
+    user.projects = savedUser.projects;
+    addMethodsBackToProjects();
+}
+
+window.addEventListener('beforeunload', () => {
+    storage.saveUser(user);
+})
+
+function addMethodsBackToProjects() {
+    user.projects.forEach(project => {
+        project.addTask = function (task) {
+            this.tasks.push(task);
+        }
+        project.getTasks = function () {
+            return this.tasks;
+        }
+        project.removeProjTask = function (taskToRemove) {
+            this.tasks.forEach((task, i) => {
+                if (task.text === taskToRemove.textContent) {
+                    this.tasks.splice(i, 1);
+                }
+            });
+        }
+    });
+}
 
 function loadCurrentPage() {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -65,15 +111,16 @@ function loadHomePageProj(allProj, currentPage) {
 }
 
 function updateNavProjects() {
-    allNavButtons.forEach((button, i) => {
+    navProjectBtns = navProjects.querySelectorAll('button');
+    navProjectBtns.forEach((button, i) => {
         if (button.classList.contains('project')) {
             button.remove();
             allNavButtons.splice(i, 1);
         }
     });
 
-    for (let i = 3; i < pages.length; i++) {
-        createProjectUI(pages[i]);
+    for (let i = 3; i < user.projects.length; i++) {
+        createProjectUI(user.projects[i].name);
     }
 
     navProjectBtns = navProjects.querySelectorAll('button');
@@ -93,6 +140,7 @@ function createProjectUI(text) {
 }
 
 function main() {
+    updateNavProjects();
     const createNewTaskBtn = document.querySelector('.create-new-task');
     createNewTaskBtn.addEventListener('click', createNewTask);
 
@@ -252,30 +300,10 @@ function createTaskUI(taskObj) {
     tasksContainer.appendChild(task);
 }
 
-const navHome = document.querySelector('.nav-home');
-const navHomeBtns = navHome.querySelectorAll('button');
-const navProjects = document.querySelector('.nav-projects');
-let navProjectBtns = navProjects.querySelectorAll('button');
-
-let allNavButtons = [];
-function addToNavButtons(arr) {
-    arr.forEach(button => {
-        allNavButtons.push(button);
-    })
-}
-
-addToNavButtons(navHomeBtns);
-addToNavButtons(navProjectBtns);
-
-handleNavBtnStyling(allNavButtons);
-
 function handleNavBtnStyling(buttons) {
     function clickHandler() {
         buttons.forEach(otherButton => {
             if (otherButton !== this) {
-                if (otherButton.textContent.startsWith('- ')) {
-                    otherButton.textContent = otherButton.textContent.slice(2);
-                }
                 otherButton.removeAttribute('nav-btn-clicked');
             }
         });

@@ -17,6 +17,6 @@ export default class Project {
             if (task.text === taskToRemove.textContent) {
                 this.tasks.splice(i, 1);
             }
-        })
+        });
     }
 }
