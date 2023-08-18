@@ -66,6 +66,29 @@ function loadCurrentPage() {
     const currentPageTitle = document.querySelector('#current-page-title');
     currentPageTitle.textContent = currentPage.charAt(0).toUpperCase() + currentPage.slice(1);
     getTasksFromProj();
+
+    updateSelectedProjectStyling();
+}
+
+function updateSelectedProjectStyling() {
+    const navProjectBtns = navProjects.querySelectorAll('button');
+    navHomeBtns.forEach(button => {
+        const buttonText = button.textContent.charAt(0).toLowerCase() + button.textContent.slice(1);
+        if (buttonText === currentPage) {
+            button.style.fontWeight = 'bold';
+        } else {
+            button.style.fontWeight = 'normal';
+        }
+    });
+
+    navProjectBtns.forEach(button => {
+        const buttonText = button.textContent.charAt(0).toLowerCase() + button.textContent.slice(1);
+        if (buttonText === currentPage) {
+            button.style.fontWeight = 'bold';
+        } else {
+            button.style.fontWeight = 'normal';
+        }
+    });
 }
 
 function getTasksFromProj() {
