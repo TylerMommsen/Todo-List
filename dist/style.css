@@ -123,11 +123,21 @@ body {
     width: 80%;
 }
 
+.current-page-title-and-remove {
+    display: flex;
+    align-self: flex-start;
+    gap: 50px;
+}
+
 #current-page-title {
     color: white;
     font-weight: bold;
     font-size: 3rem;
-    align-self: flex-start;
+}
+
+.delete-proj {
+    padding: 2px 10px 2px 10px;
+    font-size: 1.2rem;
 }
 
 .tasks-container {

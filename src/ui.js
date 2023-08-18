@@ -26,6 +26,15 @@ const savedUser = storage.getUser();
 if (savedUser) {
     user.projects = savedUser.projects;
     addMethodsBackToProjects();
+    addSavedPages();
+}
+
+function addSavedPages() {
+    user.projects.forEach(proj => {
+        if (proj.name !== 'all' && proj.name !== 'today' && proj.name !== 'week') {
+            pages.push(proj.name);
+        }
+    });
 }
 
 window.addEventListener('beforeunload', () => {
@@ -61,13 +70,21 @@ function loadCurrentPage() {
 
 function getTasksFromProj() {
     const createNewTaskBtn = document.querySelector('.create-new-task');
+    const delProjectBtn = document.querySelector('.delete-proj');
+
     user.projects.forEach(project => {
         if (project.name === currentPage) {
             if (project.name === 'today' || project.name === 'week') {
                 createNewTaskBtn.style.display = 'none';
+                delProjectBtn.style.display = 'none';
                 loadHomePageProj(user.projects[0], currentPage); // the 'All' project
                 return;
+            } else if (project.name === 'all') {
+                delProjectBtn.style.display = 'none';
+            } else {
+                delProjectBtn.style.display = 'inline-block';
             }
+
             createNewTaskBtn.style.display = 'inline-block';
             let projectTasks = project.tasks;
 
@@ -139,10 +156,41 @@ function createProjectUI(text) {
     navProjects.appendChild(projectBtn);
 }
 
+function deleteProj(projToDel) {
+    projToDel = projToDel.charAt(0).toLowerCase() + projToDel.slice(1);
+    const allProjects = navProjects.querySelectorAll('button');
+
+    user.projects.forEach((project, i) => {
+        if (project.name === projToDel) {
+            user.projects.splice(i, 1)
+            pages.splice(i, 1);
+        }
+    });
+
+    allProjects.forEach((project, i) => {
+        if (project.textContent === projToDel) {
+            project.innerHTML = '';
+            project.remove();
+            if (pages[i + 3]) {
+                currentPage = pages[i + 3];
+            } else {
+                currentPage = pages[0];
+            }
+        }
+    });
+
+    loadCurrentPage();
+}
+
 function main() {
     updateNavProjects();
     const createNewTaskBtn = document.querySelector('.create-new-task');
     createNewTaskBtn.addEventListener('click', createNewTask);
+
+    const deleteProject = document.querySelector('.delete-proj');
+    deleteProject.addEventListener('click', (e) => {
+        deleteProj(e.target.parentElement.querySelector('#current-page-title').textContent);
+    });
 
     const createNewProjectBtn = document.querySelector('.create-new-project');
     createNewProjectBtn.addEventListener('click', createNewProject);
@@ -181,7 +229,7 @@ createTaskPopup.addEventListener('submit', (e) => {
         if (project.name === currentPage) {
             project.addTask(task);
         }
-    })
+    });
     loadCurrentPage();
 
     createTaskPopup.style.display = 'none';
