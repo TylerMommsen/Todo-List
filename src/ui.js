@@ -4,22 +4,16 @@ import Storage from "./storage";
 const storage = new Storage();
 let currentPage = 'all';
 let pages = ['all', 'today', 'week'];
-
 const navHome = document.querySelector('.nav-home');
 const navHomeBtns = navHome.querySelectorAll('button');
 const navProjects = document.querySelector('.nav-projects');
 let navProjectBtns = navProjects.querySelectorAll('button');
-
-let allNavButtons = [];
-function addToNavButtons(arr) {
-    arr.forEach(button => {
-        allNavButtons.push(button);
-    })
-}
-
-addToNavButtons(navHomeBtns);
-
-handleNavBtnStyling(allNavButtons);
+const darkOverlay = document.querySelector('.dark-overlay');
+const taskText = document.querySelector('#task-text');
+const taskDate = document.querySelector('#task-date');
+const createTaskPopup = document.querySelector('.create-task-popup');
+const projName = document.querySelector('#project-name');
+const createProjectPopup = document.querySelector('.create-project-popup');
 
 const user = new User();
 const savedUser = storage.getUser();
@@ -29,6 +23,20 @@ if (savedUser) {
     addSavedPages();
 }
 
+window.addEventListener('beforeunload', () => {
+    storage.saveUser(user);
+});
+
+let allNavButtons = [];
+function addToNavButtons(arr) {
+    arr.forEach(button => {
+        allNavButtons.push(button);
+    });
+}
+
+addToNavButtons(navHomeBtns);
+handleNavBtnStyling(allNavButtons);
+
 function addSavedPages() {
     user.projects.forEach(proj => {
         if (proj.name !== 'all' && proj.name !== 'today' && proj.name !== 'week') {
@@ -36,10 +44,6 @@ function addSavedPages() {
         }
     });
 }
-
-window.addEventListener('beforeunload', () => {
-    storage.saveUser(user);
-})
 
 function addMethodsBackToProjects() {
     user.projects.forEach(project => {
@@ -218,14 +222,6 @@ function main() {
     const createNewProjectBtn = document.querySelector('.create-new-project');
     createNewProjectBtn.addEventListener('click', createNewProject);
 }
-
-const darkOverlay = document.querySelector('.dark-overlay');
-const taskText = document.querySelector('#task-text');
-const taskDate = document.querySelector('#task-date');
-const createTaskPopup = document.querySelector('.create-task-popup');
-
-const projName = document.querySelector('#project-name');
-const createProjectPopup = document.querySelector('.create-project-popup');
 
 function createNewTask() {
     createTaskPopup.style.display = 'flex';
